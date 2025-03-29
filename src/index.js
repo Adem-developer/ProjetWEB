@@ -1,6 +1,10 @@
 const express = require("express")
 const app = express()
+const bodyParser = require('body-parser')
+const swaggerSetup = require('./swagger')
 const port = 3000
+
+app.use(bodyParser.json());
 
 app.get('/', async (req, res) => {
   try {
@@ -10,15 +14,17 @@ app.get('/', async (req, res) => {
   }
 })
 
-const orderRouter = require("./routes/orders")
+const orderRouter = require("./routes/order")
 const stockRouter = require("./routes/stock")
 const customerRouter = require("./routes/customer")
 
-app.use("/orders", orderRouter)
+app.use("/order", orderRouter)
 app.use("/stock", stockRouter)
 app.use("/customer", customerRouter)
 
-app.listen(port);
+swaggerSetup(app)
+
+app.listen(port)
 
 
 /*
