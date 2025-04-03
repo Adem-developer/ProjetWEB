@@ -1,12 +1,12 @@
 const express = require("express")
 const app = express()
-const cors = require('cors');
+//const cors = require('cors');
 const bodyParser = require('body-parser')
 const swaggerSetup = require('./src/swagger')
 const port = 3001
 
 app.use(bodyParser.json());
-app.use(cors());
+//app.use(cors());
 
 app.get('/', async (req, res) => {
   try {
