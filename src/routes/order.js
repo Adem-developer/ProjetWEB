@@ -29,6 +29,42 @@ const db = require("../db")
  *       500:
  *         description: Erreur serveur.
  */
+router.get("/", async (req, res) => {
+  try {
+    const result = await db.query(`SELECT * FROM Commandes;`)
+    res.json(result.rows)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+});
+
+
+/**
+ * @swagger
+ * /order/pending:
+ *   get:
+ *     summary: Récupérer les commandes en cours
+ *     description: Récupère la liste des commandes dont le statut est "EN_COURS".
+ *     tags:
+ *       - Commandes
+ *     responses:
+ *       200:
+ *         description: Liste des commandes en cours.
+ *         content:
+ *           application/json:
+ *             example:
+ *               id_commande: 11
+ *               id_client: 5
+ *               id_employe: 2
+ *               date_commande: "2024-11-18T11:30:00.000Z"
+ *               total_commande: 100
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Commande'
+ *       500:
+ *         description: Erreur serveur.
+ */
 router.get("/pending", async (req, res) => {
   try {
     const result = await db.query(`
